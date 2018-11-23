@@ -1,14 +1,17 @@
 # Map Reduce
-
+In this project, we have built a simplified version of MapReduce on cpp for just
+a single machine. 
 In 2004, engineers at Google introduced a new paradigm for large-scale parallel data processing known as MapReduce (see the original paper [here](https://static.googleusercontent.com/media/research.google.com/en//archive/mapreduce-osdi04.pdf)). One key aspect of MapReduce is that it makes programming such tasks on large-scale clusters easy for developers; instead of worrying about how to manage parallelism, handle machine crashes, and many other complexities common within clusters of machines, the developer can instead just focus on writing little bits of code (described below) and the infrastructure handles the rest.
 
 ## Getting Started
 
-e give you here the
+## Code Overview
+
+We give you here the
 [`mapreduce.h`](https://github.com/remzi-arpacidusseau/ostep-projects/tree/master/concurrency-mapreduce/mapreduce.h)
 header file that specifies exactly what you must build in your MapReduce library:
 
-``
+```
 #ifndef __mapreduce_h__
 #define __mapreduce_h__
 
@@ -24,12 +27,12 @@ void MR_Emit(char *key, char *value);
 unsigned long MR_DefaultHashPartition(char *key, int num_partitions);
 
 void MR_Run(int argc, char *argv[], 
-        Mapper map, int num_mappers, 
-        Reducer reduce, int num_reducers, 
-        Partitioner partition);
+	    Mapper map, int num_mappers, 
+	    Reducer reduce, int num_reducers, 
+	    Partitioner partition);
 
 #endif // __mapreduce_h__
-``
+```
 
 The most important function is `MR_Run`, which takes the command line
 parameters of a given program, a pointer to a Map function (type `Mapper`,
@@ -42,6 +45,13 @@ Thus, when a user is writing a MapReduce computation with your library, they
 will implement a Map function, implement a Reduce function, possibly implement
 a Partition function, and then call `MR_Run()`. The infrastructure will then
 create threads as appropriate and run the computation.
+
+## Aplications
+We have also implemented the following applications on Map Reduce Library:
+1. ArraySum
+2. Inverted Index
+3. Pi Estimation
+4. Grayscale Conversion of BMP Images
 
 ## Contributors
 

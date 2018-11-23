@@ -1,11 +1,9 @@
 # Map Reduce
 In this project, we have built a simplified version of MapReduce on cpp for just
-a single machine. 
+a single machine, as a project in our Operating Systems Course. The project has been taken from [ostep projects](https://github.com/remzi-arpacidusseau/ostep-projects/tree/master/concurrency-mapreduce).
 In 2004, engineers at Google introduced a new paradigm for large-scale parallel data processing known as MapReduce (see the original paper [here](https://static.googleusercontent.com/media/research.google.com/en//archive/mapreduce-osdi04.pdf)). One key aspect of MapReduce is that it makes programming such tasks on large-scale clusters easy for developers; instead of worrying about how to manage parallelism, handle machine crashes, and many other complexities common within clusters of machines, the developer can instead just focus on writing little bits of code (described below) and the infrastructure handles the rest.
 
 ## Getting Started
-
-## Code Overview
 
 We give you here the
 [`mapreduce.h`](https://github.com/remzi-arpacidusseau/ostep-projects/tree/master/concurrency-mapreduce/mapreduce.h)
@@ -46,8 +44,23 @@ will implement a Map function, implement a Reduce function, possibly implement
 a Partition function, and then call `MR_Run()`. The infrastructure will then
 create threads as appropriate and run the computation.
 
-## Aplications
-We have also implemented the following applications on Map Reduce Library:
+In most cases, programs will use the default function
+(`MR_DefaultHashPartition`), which should be implemented by your code. Here is
+its implementation:
+
+```
+unsigned long MR_DefaultHashPartition(char *key, int num_partitions) {
+    unsigned long hash = 5381;
+    int c;
+    while ((c = *key++) != '\0')
+        hash = hash * 33 + c;
+    return hash % num_partitions;
+}
+```
+
+## Aplications of MapReduce
+
+We have also implemented the following applications on our Map Reduce Library:
 1. ArraySum
 2. Inverted Index
 3. Pi Estimation
